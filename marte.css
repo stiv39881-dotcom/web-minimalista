@@ -1,0 +1,200 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #0c0404;
+    color: white;
+}
+
+.espacio-planeta {
+    padding: 15px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.encabezado {
+    text-align: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.encabezado h1 {
+    font-size: 28px;
+    color: #fca5a5;
+}
+
+.encabezado p {
+    color: #ef4444;
+    font-size: 13px;
+}
+
+.volver {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    color: #fca5a5;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.contenedor-principal {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* VISOR ESPACIAL */
+.lienzo-orbital {
+    position: relative;
+    width: 100%;
+    height: 720px;
+    border-radius: 20px;
+    background: radial-gradient(circle at center, #450a0a 0%, #0c0404 85%);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* PLANETA CENTRAL MARTE CON LEVITACIÓN */
+.planeta-contenedor {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.planeta-gigante.marte {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fb923c, #dc2626 55%, #7f1d1d);
+    box-shadow: inset -15px -15px 25px #000, 0 0 30px rgba(220, 38, 38, 0.5);
+    position: relative;
+    z-index: 2;
+}
+
+.levitar-planeta {
+    animation: flotarPlaneta 4s ease-in-out infinite;
+}
+
+@keyframes flotarPlaneta {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+/* CONTENEDOR DEL SISTEMA ORBITAL */
+.sistema-orbital {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* NODO INDIVIDUAL DE LUNA */
+.luna-nodo {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    animation: flotarLuna 3s ease-in-out infinite;
+    cursor: pointer;
+    transition: transform 0.2s ease, z-index 0.2s ease;
+}
+
+.punto {
+    width: 4px;
+    height: 4px;
+    background-color: #fde68a;
+    border-radius: 50%;
+    box-shadow: 0 0 4px #fde68a;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.nombre {
+    font-size: 7px;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(0, 0, 0, 0.6);
+    padding: 1px 4px;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.luna-nodo.principal .punto {
+    width: 6px;
+    height: 6px;
+    background-color: #fed7aa;
+    box-shadow: 0 0 6px #fed7aa;
+}
+
+.luna-nodo.principal .nombre {
+    font-size: 9px;
+    color: #ffedd5;
+    font-weight: bold;
+}
+
+/* EFECTO HOVER */
+.luna-nodo:hover {
+    z-index: 100;
+}
+
+.luna-nodo:hover .nombre {
+    font-size: 14px;
+    color: #ffffff;
+    background: rgba(127, 29, 29, 0.95);
+    border: 1px solid #fca5a5;
+    box-shadow: 0 0 12px rgba(252, 165, 165, 0.9);
+    padding: 2px 6px;
+}
+
+.luna-nodo:hover .punto {
+    transform: scale(2.2);
+    background-color: #ffffff;
+    box-shadow: 0 0 8px #ffffff;
+}
+
+@keyframes flotarLuna {
+    0%, 100% { transform: var(--pos-base) translateY(0px); }
+    50% { transform: var(--pos-base) translateY(-5px); }
+}
+
+.desfas-1 { animation-delay: 0s; }
+.desfas-3 { animation-delay: 1.5s; }
+
+.o-1 { --r: 120px; }
+.a-45  { --pos-base: rotate(45deg) translate(var(--r)) rotate(-45deg); }
+.a-225 { --pos-base: rotate(225deg) translate(var(--r)) rotate(-225deg); }
+
+/* TARJETA INFORMATIVA */
+.panel-info {
+    width: 100%;
+}
+
+.tarjeta-maravilla {
+    background: rgba(127, 29, 29, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+}
+
+.tarjeta-maravilla h2 {
+    font-size: 15px;
+    color: #fca5a5;
+    margin-bottom: 4px;
+}
+
+.tarjeta-maravilla p {
+    font-size: 12px;
+    color: #fecaca;
+}

@@ -1,0 +1,260 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #030407;
+    color: white;
+}
+
+.espacio-planeta {
+    padding: 15px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.encabezado {
+    text-align: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.encabezado h1 {
+    font-size: 28px;
+    color: #fef08a;
+}
+
+.encabezado p {
+    color: #eab308;
+    font-size: 13px;
+}
+
+.volver {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    color: #fef08a;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.contenedor-principal {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* VISOR ESPACIAL */
+.lienzo-orbital {
+    position: relative;
+    width: 100%;
+    height: 720px;
+    border-radius: 20px;
+    background: radial-gradient(circle at center, #1e1b10 0%, #030407 85%);
+    border: 1px solid rgba(234, 179, 8, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* PLANETA CENTRAL SATURNO CON ANILLO Y LEVITACIÓN */
+.planeta-contenedor {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.planeta-gigante.saturno {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #fef08a, #eab308 30%, #ca8a04 60%, #854d0e);
+    box-shadow: inset -12px -12px 20px #000, 0 0 20px rgba(234, 179, 8, 0.5);
+    position: relative;
+    z-index: 2;
+}
+
+.anillo-saturno {
+    position: absolute;
+    width: 160px;
+    height: 40px;
+    border-radius: 50%;
+    border: 8px solid rgba(234, 179, 8, 0.6);
+    border-top-color: rgba(254, 240, 138, 0.9);
+    transform: rotate(-15deg);
+    box-shadow: 0 0 15px rgba(234, 179, 8, 0.3);
+    z-index: 1;
+}
+
+.levitar-planeta {
+    animation: flotarPlaneta 4s ease-in-out infinite;
+}
+
+@keyframes flotarPlaneta {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+/* CONTENEDOR DEL SISTEMA ORBITAL ESTÁTICO */
+.sistema-orbital {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* NODO INDIVIDUAL DE LUNA */
+.luna-nodo {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    white-space: nowrap;
+    animation: flotarLuna 3s ease-in-out infinite;
+    cursor: pointer;
+    transition: transform 0.2s ease, z-index 0.2s ease;
+}
+
+.punto {
+    width: 3px;
+    height: 3px;
+    background-color: #fef08a;
+    border-radius: 50%;
+    box-shadow: 0 0 3px #fef08a;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.nombre {
+    font-size: 6px;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(0, 0, 0, 0.6);
+    padding: 0 2px;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+}
+
+/* DESTACADO PARA LUNAS PRINCIPALES */
+.luna-nodo.principal .punto {
+    width: 5px;
+    height: 5px;
+    background-color: #38bdf8;
+    box-shadow: 0 0 5px #38bdf8;
+}
+
+.luna-nodo.principal .nombre {
+    font-size: 8px;
+    color: #fef08a;
+    font-weight: bold;
+}
+
+/* EFECTO HOVER: AGRANDAR TEXTO Y RESALTAR */
+.luna-nodo:hover {
+    z-index: 100;
+}
+
+.luna-nodo:hover .nombre {
+    font-size: 14px;
+    color: #ffffff;
+    background: rgba(133, 77, 14, 0.95);
+    border: 1px solid #fef08a;
+    box-shadow: 0 0 12px rgba(254, 240, 138, 0.9);
+    padding: 2px 6px;
+}
+
+.luna-nodo:hover .punto {
+    transform: scale(2.2);
+    background-color: #ffffff;
+    box-shadow: 0 0 8px #ffffff;
+}
+
+/* EFECTO DE LEVITACIÓN SUAVE */
+@keyframes flotarLuna {
+    0%, 100% { transform: var(--pos-base) translateY(0px); }
+    50% { transform: var(--pos-base) translateY(-5px); }
+}
+
+/* DESFASES DE TIEMPO DE LEVITACIÓN */
+.desfas-1 { animation-delay: 0s; }
+.desfas-2 { animation-delay: 0.6s; }
+.desfas-3 { animation-delay: 1.2s; }
+.desfas-4 { animation-delay: 1.8s; }
+.desfas-5 { animation-delay: 2.4s; }
+
+/* DISTANCIA DE LAS ÓRBITAS CONCÉNTRICAS (Radios) */
+.o-1 { --r: 95px; }
+.o-2 { --r: 140px; }
+.o-3 { --r: 185px; }
+.o-4 { --r: 230px; }
+.o-5 { --r: 275px; }
+.o-6 { --r: 320px; }
+
+/* ÁNGULOS EXACTOS DE POSICIONAMIENTO RADIAL ESTÁTICO */
+.a-0   { --pos-base: rotate(0deg) translate(var(--r)) rotate(0deg); }
+.a-15  { --pos-base: rotate(15deg) translate(var(--r)) rotate(-15deg); }
+.a-20  { --pos-base: rotate(20deg) translate(var(--r)) rotate(-20deg); }
+.a-30  { --pos-base: rotate(30deg) translate(var(--r)) rotate(-30deg); }
+.a-40  { --pos-base: rotate(40deg) translate(var(--r)) rotate(-40deg); }
+.a-45  { --pos-base: rotate(45deg) translate(var(--r)) rotate(-45deg); }
+.a-60  { --pos-base: rotate(60deg) translate(var(--r)) rotate(-60deg); }
+.a-75  { --pos-base: rotate(75deg) translate(var(--r)) rotate(-75deg); }
+.a-80  { --pos-base: rotate(80deg) translate(var(--r)) rotate(-80deg); }
+.a-90  { --pos-base: rotate(90deg) translate(var(--r)) rotate(-90deg); }
+.a-100 { --pos-base: rotate(100deg) translate(var(--r)) rotate(-100deg); }
+.a-105 { --pos-base: rotate(105deg) translate(var(--r)) rotate(-105deg); }
+.a-120 { --pos-base: rotate(120deg) translate(var(--r)) rotate(-120deg); }
+.a-135 { --pos-base: rotate(135deg) translate(var(--r)) rotate(-135deg); }
+.a-140 { --pos-base: rotate(140deg) translate(var(--r)) rotate(-140deg); }
+.a-150 { --pos-base: rotate(150deg) translate(var(--r)) rotate(-150deg); }
+.a-160 { --pos-base: rotate(160deg) translate(var(--r)) rotate(-160deg); }
+.a-165 { --pos-base: rotate(165deg) translate(var(--r)) rotate(-165deg); }
+.a-180 { --pos-base: rotate(180deg) translate(var(--r)) rotate(-180deg); }
+.a-195 { --pos-base: rotate(195deg) translate(var(--r)) rotate(-195deg); }
+.a-200 { --pos-base: rotate(200deg) translate(var(--r)) rotate(-200deg); }
+.a-210 { --pos-base: rotate(210deg) translate(var(--r)) rotate(-210deg); }
+.a-220 { --pos-base: rotate(220deg) translate(var(--r)) rotate(-220deg); }
+.a-225 { --pos-base: rotate(225deg) translate(var(--r)) rotate(-225deg); }
+.a-240 { --pos-base: rotate(240deg) translate(var(--r)) rotate(-240deg); }
+.a-255 { --pos-base: rotate(255deg) translate(var(--r)) rotate(-255deg); }
+.a-260 { --pos-base: rotate(260deg) translate(var(--r)) rotate(-260deg); }
+.a-270 { --pos-base: rotate(270deg) translate(var(--r)) rotate(-270deg); }
+.a-280 { --pos-base: rotate(280deg) translate(var(--r)) rotate(-280deg); }
+.a-285 { --pos-base: rotate(285deg) translate(var(--r)) rotate(-285deg); }
+.a-300 { --pos-base: rotate(300deg) translate(var(--r)) rotate(-300deg); }
+.a-315 { --pos-base: rotate(315deg) translate(var(--r)) rotate(-315deg); }
+.a-320 { --pos-base: rotate(320deg) translate(var(--r)) rotate(-320deg); }
+.a-330 { --pos-base: rotate(330deg) translate(var(--r)) rotate(-330deg); }
+.a-340 { --pos-base: rotate(340deg) translate(var(--r)) rotate(-340deg); }
+.a-345 { --pos-base: rotate(345deg) translate(var(--r)) rotate(-345deg); }
+
+/* TARJETA INFORMATIVA */
+.panel-info {
+    width: 100%;
+}
+
+.tarjeta-maravilla {
+    background: rgba(133, 77, 14, 0.1);
+    border: 1px solid rgba(234, 179, 8, 0.2);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+}
+
+.tarjeta-maravilla h2 {
+    font-size: 15px;
+    color: #fef08a;
+    margin-bottom: 4px;
+}
+
+.tarjeta-maravilla p {
+    font-size: 12px;
+    color: #fef9c3;
+}
